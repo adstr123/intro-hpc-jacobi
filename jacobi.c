@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
+#include </usr/local/include/gperftools/profiler.h>
 
 static int N;
 static int MAX_ITERATIONS;
@@ -41,6 +42,7 @@ void parse_arguments(int argc, char *argv[]);
 // Returns the number of iterations performed
 int run(double *A, double *b, double *x, double *xtmp)
 {
+  ProfilerStart("jgperf.txt");
   int itr;
   int row, col;
   double dot;
@@ -81,6 +83,7 @@ int run(double *A, double *b, double *x, double *xtmp)
   } while ((itr < MAX_ITERATIONS) && (sqrt(sqdiff) > CONVERGENCE_THRESHOLD));
 
   return itr;
+  ProfilerStop();
 }
 
 int main(int argc, char *argv[])

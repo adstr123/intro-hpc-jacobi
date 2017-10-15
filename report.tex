@@ -12,6 +12,7 @@
 \begin{itemize}
 \item Time: 10.91s/130.75s. Changes: N/A
 \item Time: 3.27s/53.35s. Changes: Compiler from gcc to icc.
+\item Time: 14.37s. Changes: Compiler flag -g, added profiling code to jacobi.c, profiled with pprof --text --lines ./jacobi jgperf.txt. Also had to install gperftools, requiring libunwind. Then installed dot, gv and EPEL for -gv visualisations. First jgperf.txt generated.
 
 \end{itemize}
 
