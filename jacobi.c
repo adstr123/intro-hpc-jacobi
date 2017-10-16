@@ -66,6 +66,20 @@ int run(double *A, double *b, double *x, double *xtmp)
       xtmp[row] = (b[row] - dot) / A[row + row*N];
     }
 
+    // Perform Jacobi iteration
+    /* for (col = 0; col < N; col++) */
+    /* { */
+    /*   dot = 0.0; */
+    /*   for (row = 0; row < N; row++) */
+    /*   { */
+    /* 	if (col != row) */
+    /* 	{ */
+    /* 	  dot += A[col + row*N] * x[col]; */
+    /* 	} */
+    /*   } */
+    /*   xtmp[row] = (b[row] - dot / A[row + row*N]); */
+    /* } */
+
     // Swap pointers
     ptrtmp = x;
     x      = xtmp;
@@ -91,6 +105,7 @@ int main(int argc, char *argv[])
   parse_arguments(argc, argv);
 
   double *A    = malloc(N*N*sizeof(double));
+  double *Aorg = malloc(N*N*sizeof(double));
   double *b    = malloc(N*sizeof(double));
   double *x    = malloc(N*sizeof(double));
   double *xtmp = malloc(N*sizeof(double));
@@ -120,12 +135,41 @@ int main(int argc, char *argv[])
   }
 
   // DEBUG print fresh array
-  /* for (int row = 0; row < N; row++) { */
-  /*   for (int col = 0; col < N; col++) { */
-  /*     printf("%f ", A[row*N + col]); */
-  /*   } */
-  /*   printf("\n"); */
-  /* } */
+  printf("BEFORE TRANSPOSE:\n");
+  for (int row = 0; row < N; row++)
+  {
+    for (int col = 0; col < N; col++)
+    {
+	printf("%f ", A[row*N + col]);
+    }
+    printf("\n");
+  }
+
+  // Transpose array
+  for (int i = 0; i < N; ++i)
+  {
+    for (int j = i+1; j < N; ++j)
+    {
+      for (int k = 0; k < N*N; k++)
+      {
+	Aorg[k] = A[k];
+      }
+
+      A[N*i + j] = A[N*j + i];
+      A[N*j + i] = Aorg[N*i + j];
+    }
+  }
+
+  // DEBUG print transposed array
+  printf("AFTER TRANSPOSE:\n");
+  for (int row = 0; row < N; row++)
+  {
+    for (int col = 0; col < N; col++)
+    {
+	printf("%f ", A[row*N + col]);
+    }
+    printf("\n");
+  }
 
   // Run Jacobi solver
   double solve_start = get_timestamp();
