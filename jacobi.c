@@ -119,6 +119,14 @@ int main(int argc, char *argv[])
     x[row] = 0.0;
   }
 
+  // DEBUG print fresh array
+  /* for (int row = 0; row < N; row++) { */
+  /*   for (int col = 0; col < N; col++) { */
+  /*     printf("%f ", A[row*N + col]); */
+  /*   } */
+  /*   printf("\n"); */
+  /* } */
+
   // Run Jacobi solver
   double solve_start = get_timestamp();
   int itr = run(A, b, x, xtmp);

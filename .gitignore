@@ -4,3 +4,5 @@ auto
 report_flymake.log
 *~
 .gitignore~
+cachegrind.out.*
+valgrind --cachegrind.png
