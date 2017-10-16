@@ -42,7 +42,7 @@ void parse_arguments(int argc, char *argv[]);
 // Returns the number of iterations performed
 int run(double *A, double *b, double *x, double *xtmp)
 {
-  ProfilerStart("jgperf.txt");
+  //ProfilerStart("jgperf.txt");
   int itr;
   int row, col;
   double dot;
@@ -66,7 +66,7 @@ int run(double *A, double *b, double *x, double *xtmp)
       xtmp[row] = (b[row] - dot) / A[row + row*N];
     }
 
-    // Perform Jacobi iteration
+    // Perform Jacobi iteration (version 2.0)
     /* for (col = 0; col < N; col++) */
     /* { */
     /*   dot = 0.0; */
@@ -97,11 +97,12 @@ int run(double *A, double *b, double *x, double *xtmp)
   } while ((itr < MAX_ITERATIONS) && (sqrt(sqdiff) > CONVERGENCE_THRESHOLD));
 
   return itr;
-  ProfilerStop();
+  //ProfilerStop();
 }
 
 int main(int argc, char *argv[])
 {
+  ProfilerStart("jgperf2.txt");
   parse_arguments(argc, argv);
 
   double *A    = malloc(N*N*sizeof(double));
@@ -135,15 +136,15 @@ int main(int argc, char *argv[])
   }
 
   // DEBUG print fresh array
-  printf("BEFORE TRANSPOSE:\n");
-  for (int row = 0; row < N; row++)
-  {
-    for (int col = 0; col < N; col++)
-    {
-	printf("%f ", A[row*N + col]);
-    }
-    printf("\n");
-  }
+  /* printf("BEFORE TRANSPOSE:\n"); */
+  /* for (int row = 0; row < N; row++) */
+  /* { */
+  /*   for (int col = 0; col < N; col++) */
+  /*   { */
+  /* 	printf("%f ", A[row*N + col]); */
+  /*   } */
+  /*   printf("\n"); */
+  /* } */
 
   // Transpose array
   for (int i = 0; i < N; ++i)
@@ -161,15 +162,15 @@ int main(int argc, char *argv[])
   }
 
   // DEBUG print transposed array
-  printf("AFTER TRANSPOSE:\n");
-  for (int row = 0; row < N; row++)
-  {
-    for (int col = 0; col < N; col++)
-    {
-	printf("%f ", A[row*N + col]);
-    }
-    printf("\n");
-  }
+  /* printf("AFTER TRANSPOSE:\n"); */
+  /* for (int row = 0; row < N; row++) */
+  /* { */
+  /*   for (int col = 0; col < N; col++) */
+  /*   { */
+  /* 	printf("%f ", A[row*N + col]); */
+  /*   } */
+  /*   printf("\n"); */
+  /* } */
 
   // Run Jacobi solver
   double solve_start = get_timestamp();
@@ -206,6 +207,7 @@ int main(int argc, char *argv[])
   free(xtmp);
 
   return 0;
+  ProfilerStop();
 }
 
 double get_timestamp()
