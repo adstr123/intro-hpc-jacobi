@@ -15,6 +15,9 @@
 \item Time: 14.37s. Changes: Compiler flag -g, added profiling code to jacobi.c, profiled with pprof --text --lines ./jacobi jgperf.txt. Also had to install gperftools, requiring libunwind. Then installed dot, gv and EPEL for -gv visualisations. First jgperf.txt generated.
 \item Line 64 analysed. Looping through data -> data structure issues?
 \item Examine data init block. Simplified to 3X3 and worked through using pen and paper. Going through column-wise across a virtual 2D array - jumping across the massive array, terrible for memory. Not contiguous at all.
+\item Transposed matrix. Solver time down, overall time up. Profiler says massive amounts of time copying array.
+\item Direct solver to solver test: n = 400 w/ transpose: 34.28s/0.78s, n = 400 w/out transpose: 0.79/0.78s. No perf. improvement.
+\item Time: . Changes: Rewrote init instead of transposition. Rewrote traversal in run.
 
 \end{itemize}
 

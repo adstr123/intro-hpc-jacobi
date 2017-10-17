@@ -23,7 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
-#include </usr/local/include/gperftools/profiler.h>
+//#include </usr/local/include/gperftools/profiler.h>
 
 static int N;
 static int MAX_ITERATIONS;
@@ -55,29 +55,43 @@ int run(double *A, double *b, double *x, double *xtmp)
   do
   {
     // Perfom Jacobi iteration
+    /* for (row = 0; row < N; row++) */
+    /* { */
+    /*   dot = 0.0; */
+    /*   for (col = 0; col < N; col++) */
+    /*   { */
+    /*     if (row != col) */
+    /* 	{ */
+    /*       dot += A[row + col*N] * x[col]; */
+    /* 	} */
+    /*   } */
+    /*   xtmp[row] = (b[row] - dot) / A[row + row*N]; */
+    /* } */
+
+    // Perform Jacobi iteration (version 2.0)
     for (row = 0; row < N; row++)
     {
       dot = 0.0;
       for (col = 0; col < N; col++)
       {
-        if (row != col)
-          dot += A[row + col*N] * x[col];
+    	if (row != col)
+    	{
+    	  dot += A[row*N + col] * x[col];
+    	}
       }
-      xtmp[row] = (b[row] - dot) / A[row + row*N];
+      xtmp[row] = (b[row] - dot) / A[row*N + row];
     }
 
-    // Perform Jacobi iteration (version 2.0)
-    /* for (col = 0; col < N; col++) */
+    // DEBUG print xtmp array
+    /* printf("Iteration: %d\n", itr); */
+    /* printf("xtmp:"); */
+    /* for (int row = 0; row < N; row++) */
     /* { */
-    /*   dot = 0.0; */
-    /*   for (row = 0; row < N; row++) */
+    /*   for (int col = 0; col < N; col++) */
     /*   { */
-    /* 	if (col != row) */
-    /* 	{ */
-    /* 	  dot += A[col + row*N] * x[col]; */
-    /* 	} */
+    /* 	printf("%f ", xtmp[row*N + col]); */
     /*   } */
-    /*   xtmp[row] = (b[row] - dot / A[row + row*N]); */
+    /*   printf("\n"); */
     /* } */
 
     // Swap pointers
@@ -102,7 +116,6 @@ int run(double *A, double *b, double *x, double *xtmp)
 
 int main(int argc, char *argv[])
 {
-  ProfilerStart("jgperf2.txt");
   parse_arguments(argc, argv);
 
   double *A    = malloc(N*N*sizeof(double));
@@ -120,19 +133,35 @@ int main(int argc, char *argv[])
   double total_start = get_timestamp();
 
   // Initialize data
+  /* srand(SEED); */
+  /* for (int row = 0; row < N; row++) */
+  /* { */
+  /*   double rowsum = 0.0; */
+  /*   for (int col = 0; col < N; col++) */
+  /*   { */
+  /*     double value = rand()/(double)RAND_MAX; */
+  /*     A[row + col*N] = value; */
+  /*     rowsum += value; */
+  /*   } */
+  /*   A[row + row*N] += rowsum; */
+  /*   b[row] = rand()/(double)RAND_MAX; */
+  /*   x[row] = 0.0; */
+  /* } */
+
+  // Initialize data version 2.0
   srand(SEED);
-  for (int row = 0; row < N; row++)
+  for (int col = 0; col < N; col++)
   {
     double rowsum = 0.0;
-    for (int col = 0; col < N; col++)
+    for (int row = 0; row < N; row++)
     {
       double value = rand()/(double)RAND_MAX;
-      A[row + col*N] = value;
+      A[col*N + row] = value;
       rowsum += value;
     }
-    A[row + row*N] += rowsum;
-    b[row] = rand()/(double)RAND_MAX;
-    x[row] = 0.0;
+    A[col*N + col] += rowsum;
+    b[col] = rand()/(double)RAND_MAX;
+    x[col] = 0.0;
   }
 
   // DEBUG print fresh array
@@ -147,19 +176,19 @@ int main(int argc, char *argv[])
   /* } */
 
   // Transpose array
-  for (int i = 0; i < N; ++i)
-  {
-    for (int j = i+1; j < N; ++j)
-    {
-      for (int k = 0; k < N*N; k++)
-      {
-	Aorg[k] = A[k];
-      }
+  /* for (int i = 0; i < N; ++i) */
+  /* { */
+  /*   for (int j = i+1; j < N; ++j) */
+  /*   { */
+  /*     for (int k = 0; k < N*N; k++) */
+  /*     { */
+  /* 	Aorg[k] = A[k]; */
+  /*     } */
 
-      A[N*i + j] = A[N*j + i];
-      A[N*j + i] = Aorg[N*i + j];
-    }
-  }
+  /*     A[N*i + j] = A[N*j + i]; */
+  /*     A[N*j + i] = Aorg[N*i + j]; */
+  /*   } */
+  /* } */
 
   // DEBUG print transposed array
   /* printf("AFTER TRANSPOSE:\n"); */
@@ -207,7 +236,6 @@ int main(int argc, char *argv[])
   free(xtmp);
 
   return 0;
-  ProfilerStop();
 }
 
 double get_timestamp()
