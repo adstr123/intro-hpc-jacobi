@@ -16,15 +16,36 @@ In order to make meaningful assessments of the performance gains made whilst opt
 
 Running the code as-is on BlueCrystal Phase 3, compiled with GNU compiler without any optimisation flags or debugging or any improvements to the stock code, gave times of 10.91/130.75/1180.81s.
 
-\begin{itemize}
-\item Time: 10.91s/130.75s. Changes: N/A
-\item Time: 3.27s/53.35s. Changes: Compiler from gcc to icc.
-\item Time: 14.37s. Changes: Compiler flag -g, added profiling code to jacobi.c, profiled with pprof --text --lines ./jacobi jgperf.txt. Also had to install gperftools, requiring libunwind. Then installed dot, gv and EPEL for -gv visualisations. First jgperf.txt generated.
-\item Line 64 analysed. Looping through data -> data structure issues?
-\item Examine data init block. Simplified to 3X3 and worked through using pen and paper. Going through column-wise across a virtual 2D array - jumping across the massive array, terrible for memory. Not contiguous at all.
-\item Transposed matrix. Solver time down, overall time up. Profiler says massive amounts of time copying array.
-\item Direct solver to solver test: n = 400 w/ transpose: 34.28s/0.78s, n = 400 w/out transpose: 0.79/0.78s. No perf. improvement.
-\item Time: 1.1/90s for 4000. Changes: Rewrote init instead of transposition. Rewrote traversal in run.
-\end{itemize}
+\subsection{Compiler}
+The first crucial step to optimisation is of course profiling. Learning where the slow part of your code is is essential for efficient use of optimisation time; even eliminating 99.999\% of the run time of a code block that only takes up 1\% of the overall program run time is still only eliminating ~1\% of the program run time. By contrast, reducing a code block that comprises 90\% of the total run time by 10\% eliminates 9\% of the total run time.
+
+However, before beginning profiling, I switched compilers from GNU to Intel C Compiler (icc). Whilst the GNU compiler may indeed be better for some things, I didn't need profiling to know the Intel compiler offers better optimisations than GNU. Besides being the general concensus, in speed tests such as \textbf{X AND Y} prove it compiles to faster executables. Indeed, after this change, the timings were 3.27s/53.35s, nearly 3 times as fast without changing a single line of code myself.
+
+\subsection{First profile and offending code identification}
+Now the preliminary steps had been taken care of it was time to profile. After a short comparison of profiling tools including gperf, tau, valgrind, gperftools, and Intel VTune, I settled on gperftools. It struck a balance between detail and complexity. Gprof seemed too simple from initial tests, although it is installed by default on Linux systems. At the other end of the scale VTune seemed to offer incredible flexibility, but was more difficult to manipulate in order to get the exact desired output.
+
+Whilst gperftools was not installed on BlueCrystal, I could profile locally since the processing power required was not high and I didn't need like-for-like run times; I just wanted to identify which code blocks were taking up \emph{percentages} of run time. After installing libunwind, dot, dv and EPEL, gperftools could be used. This simply involved including the header file and invoking ``ProfilerStart(<outputfile>)'' and ``ProfilerStop()'' functions, then recompiling with -g debug flag and linking to the profiler with -lmprofiler. It is worth mentioning that debugging increased the run time significantly to around 10 seconds for the 1000 matrix, but once again, I am simply trying to identify percentage of run times. The profile is accessed with pprof --text --lines ./<program> <profilefile>.
+
+Immediately gperftools identified line 64 of the default code as an offender occupying ~85\% of the total run time. I identified this as a loop in the run() function where the Jacobi algorithm is executed, and the dot product of the inputs and the x values is calculated.
+
+\subsection{Investigation and cachegrind cache analysis}
+Which line of code was the offending line may have identified by the profiling tool but it was still up to human logic to figure out exactly why this line was offending. To figure this out, I relied on the trusty pen and paper - empirically the best debugger around (reference). I reduced the matrix order to 3 and drew out step by step which element of the array is being checked and assigned for each value of row and col (9 values in total). When I visually represented the single dimension array as a 2D array on paper it became clear the data was being accessed column-wise. Since in C arrays are stored row-wise, this means that the memory was being accessed in an inefficient manner - jumping around incontiguously - which involves memory being loaded in and out throughout the memory heirarchy and wasting CPU cycles.
+
+To confirm this suspicion, I installed valgrind and utilised it's --cachegrind option which analyses how memory is being accessed, from instruction registers through L1 and L2 caches. The following results were produced:
+
+\textbf{valgrind image}
+
+This was actually a little better than I anticipated but 7\% is still a very high percentage and would represent a large performance issue.
+
+\subsection{Manipulating the data structure}
+I had to make the algorithm access the array elements sequentially; so the ``rows'' of the 2D array had to be where the ``columns'' currently were. Altering the data initialisation by ``transposing'' the array using different indexing achieved this (proved with a debug loop to print the array before and after the code block). This resulted in a larger overall time due to the transposition but a lower solver run time, proving the concept. I then worked this code into the main initialisation block.
+
+To match this, the Jacobi solver was also modified to index differently. This sent the time plummeting to 1.1s/y/90s.
+
+\subsection{Additional optimisations}
+Working through a structured checklist of other optimisations, I then decided that the precision was too high. I changed doubles to floats which resulted in a further performance increase to 0.99s/6.84s/71.72s.
+
+\section{Conclusion}
+Overall this exercise proves there is massive value to be had in optimisation before parallelization. In a time when high performance computing resources are treated as lab tools, allocated by the second, every time saving operation counts. Whilst modern compilers can do a lot of work for you, there is still a lot to be said for the programmer optimising options and code herself.
 
 \end{document}

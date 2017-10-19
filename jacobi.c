@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
 
   double total_start = get_timestamp();
 
-  // Initialize data
+  //Initialize data
   /* srand(SEED); */
   /* for (int row = 0; row < N; row++) */
   /* { */
