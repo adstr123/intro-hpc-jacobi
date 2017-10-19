@@ -1,0 +1,719 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+Intel(R) C Intel(R) 64 Compiler for applications running on Intel(R) 64, Version 18.0.0.128 Build 20170811
+
+Compiler options: -std=c99 -O3 -qopt-report=5 -o jacobi -lm
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: true
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: main(int, char **)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (main(int, char **)) [1/6=16.7%] jacobi.c(118,1)
+  -> INLINE: (119,3) parse_arguments(int, char **) (isz = 322) (sz = 329)
+    -> EXTERN: (272,10) strcmp(const char *, const char *)
+    -> EXTERN: (272,47) strcmp(const char *, const char *)
+    -> INLINE: (274,51) parse_double(const char *) (isz = 13) (sz = 20)
+      -> EXTERN: (258,18) strtod(const char *__restrict__, char **__restrict__)
+      -> EXTERN: (259,10) strlen(const char *)
+    -> EXTERN: (276,9) printf(const char *__restrict__, ...)
+    -> EXTERN: (277,9) exit(int)
+    -> EXTERN: (280,15) strcmp(const char *, const char *)
+    -> EXTERN: (280,51) strcmp(const char *, const char *)
+    -> INLINE: (282,44) parse_int(const char *) (isz = 15) (sz = 22)
+      -> EXTERN: (251,15) strtoul(const char *__restrict__, char **__restrict__, int)
+      -> EXTERN: (252,10) strlen(const char *)
+    -> EXTERN: (284,9) printf(const char *__restrict__, ...)
+    -> EXTERN: (285,9) exit(int)
+    -> EXTERN: (288,15) strcmp(const char *, const char *)
+    -> EXTERN: (288,47) strcmp(const char *, const char *)
+    -> INLINE: (290,31) parse_int(const char *) (isz = 15) (sz = 22)
+      -> EXTERN: (251,15) strtoul(const char *__restrict__, char **__restrict__, int)
+      -> EXTERN: (252,10) strlen(const char *)
+    -> EXTERN: (292,9) printf(const char *__restrict__, ...)
+    -> EXTERN: (293,9) exit(int)
+    -> EXTERN: (296,15) strcmp(const char *, const char *)
+    -> EXTERN: (296,45) strcmp(const char *, const char *)
+    -> INLINE: (298,34) parse_int(const char *) (isz = 15) (sz = 22)
+      -> EXTERN: (251,15) strtoul(const char *__restrict__, char **__restrict__, int)
+      -> EXTERN: (252,10) strlen(const char *)
+    -> EXTERN: (300,9) printf(const char *__restrict__, ...)
+    -> EXTERN: (301,9) exit(int)
+    -> EXTERN: (304,15) strcmp(const char *, const char *)
+    -> EXTERN: (304,45) strcmp(const char *, const char *)
+    -> EXTERN: (306,7) printf(const char *__restrict__, ...)
+    -> EXTERN: (307,7) printf(const char *__restrict__, ...)
+    -> EXTERN: (308,7) printf(const char *__restrict__, ...)
+    -> EXTERN: (309,7) printf(const char *__restrict__, ...)
+    -> EXTERN: (310,7) printf(const char *__restrict__, ...)
+    -> EXTERN: (311,7) printf(const char *__restrict__, ...)
+    -> EXTERN: (312,7) printf(const char *__restrict__, ...)
+    -> EXTERN: (313,7) printf(const char *__restrict__, ...)
+    -> EXTERN: (314,7) printf(const char *__restrict__, ...)
+    -> EXTERN: (315,7) exit(int)
+    -> EXTERN: (319,7) printf(const char *__restrict__, ...)
+    -> EXTERN: (320,7) exit(int)
+  -> EXTERN: (121,17) malloc(size_t)
+  -> EXTERN: (123,17) malloc(size_t)
+  -> EXTERN: (124,17) malloc(size_t)
+  -> EXTERN: (125,17) malloc(size_t)
+  -> EXTERN: (127,3) printf(const char *__restrict__, ...)
+  -> EXTERN: (128,3) printf(const char *__restrict__, ...)
+  -> EXTERN: (129,3) printf(const char *__restrict__, ...)
+  -> EXTERN: (130,3) printf(const char *__restrict__, ...)
+  -> EXTERN: (131,3) printf(const char *__restrict__, ...)
+  -> INLINE: (133,24) get_timestamp() (isz = 8) (sz = 13)
+    -> EXTERN: (244,3) gettimeofday(struct timeval *__restrict__, __timezone_ptr_t)
+  -> EXTERN: (152,3) srand(unsigned int)
+  -> EXTERN: (158,21) rand(void)
+  -> EXTERN: (163,14) rand(void)
+  -> INLINE: (205,24) get_timestamp() (isz = 8) (sz = 13)
+    -> EXTERN: (244,3) gettimeofday(struct timeval *__restrict__, __timezone_ptr_t)
+  -> INLINE: (206,13) run(float *, float *, float *, float *) (isz = 94) (sz = 107)
+  -> INLINE: (207,22) get_timestamp() (isz = 8) (sz = 13)
+    -> EXTERN: (244,3) gettimeofday(struct timeval *__restrict__, __timezone_ptr_t)
+  -> INLINE: (223,22) get_timestamp() (isz = 8) (sz = 13)
+    -> EXTERN: (244,3) gettimeofday(struct timeval *__restrict__, __timezone_ptr_t)
+  -> EXTERN: (225,3) printf(const char *__restrict__, ...)
+  -> EXTERN: (226,3) printf(const char *__restrict__, ...)
+  -> EXTERN: (227,3) printf(const char *__restrict__, ...)
+  -> EXTERN: (228,3) printf(const char *__restrict__, ...)
+  -> EXTERN: (230,5) printf(const char *__restrict__, ...)
+  -> EXTERN: (231,3) printf(const char *__restrict__, ...)
+  -> EXTERN: (233,3) free(void *)
+  -> EXTERN: (234,3) free(void *)
+  -> EXTERN: (235,3) free(void *)
+  -> EXTERN: (236,3) free(void *)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at jacobi.c(270,3) inlined into jacobi.c(119,3)
+   remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+LOOP END
+
+LOOP BEGIN at jacobi.c(153,3)
+   remark #25236: Loop with pragma of trip count = 1000 ignored for large value
+   remark #15382: vectorization support: call to function rand(void) cannot be vectorized   [ jacobi.c(158,21) ]
+   remark #15382: vectorization support: call to function rand(void) cannot be vectorized   [ jacobi.c(163,14) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:rand(void) (158:21) and call:rand(void) (163:14)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:rand(void) (163:14) and call:rand(void) (158:21)
+
+   LOOP BEGIN at jacobi.c(156,5)
+      remark #15382: vectorization support: call to function rand(void) cannot be vectorized   [ jacobi.c(158,21) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed ANTI dependence between rowsum (160:7) and rowsum (160:7)
+      remark #15346: vector dependence: assumed FLOW dependence between rowsum (160:7) and rowsum (160:7)
+      remark #15346: vector dependence: assumed FLOW dependence between rowsum (160:7) and rowsum (160:7)
+      remark #15346: vector dependence: assumed ANTI dependence between rowsum (160:7) and rowsum (160:7)
+   LOOP END
+LOOP END
+
+LOOP BEGIN at jacobi.c(54,3) inlined into jacobi.c(206,13)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at jacobi.c(72,5) inlined into jacobi.c(206,13)
+      remark #25236: Loop with pragma of trip count = 1000 ignored for large value
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+
+      LOOP BEGIN at jacobi.c(75,7) inlined into jacobi.c(206,13)
+      <Peeled loop for vectorization, Predicate Optimized v1>
+         remark #25015: Estimate of max trip count of loop=3
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7) inlined into jacobi.c(206,13)
+      <Predicate Optimized v1>
+         remark #25423: Condition at line 77 hoisted out of this loop
+         remark #15388: vectorization support: reference A[row*N+col] has aligned access   [ jacobi.c(79,15) ]
+         remark #15388: vectorization support: reference x[col] has aligned access   [ jacobi.c(79,32) ]
+         remark #15305: vectorization support: vector length 4
+         remark #15399: vectorization support: unroll factor set to 2
+         remark #15309: vectorization support: normalized vectorization overhead 1.200
+         remark #15417: vectorization support: number of FP up converts: single precision to double precision 1   [ jacobi.c(48,3) ]
+         remark #15300: LOOP WAS VECTORIZED
+         remark #15442: entire loop may be executed in remainder
+         remark #15448: unmasked aligned unit stride loads: 2 
+         remark #15475: --- begin vector cost summary ---
+         remark #15476: scalar cost: 10 
+         remark #15477: vector cost: 3.750 
+         remark #15478: estimated potential speedup: 2.520 
+         remark #15487: type converts: 1 
+         remark #15488: --- end vector cost summary ---
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7) inlined into jacobi.c(206,13)
+      <Alternate Alignment Vectorized Loop, Predicate Optimized v1>
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7) inlined into jacobi.c(206,13)
+      <Remainder loop for vectorization, Predicate Optimized v1>
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7) inlined into jacobi.c(206,13)
+      <Peeled loop for vectorization, Predicate Optimized v2>
+         remark #25015: Estimate of max trip count of loop=3
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7) inlined into jacobi.c(206,13)
+      <Predicate Optimized v2>
+         remark #15388: vectorization support: reference A[row*N+col] has aligned access   [ jacobi.c(79,15) ]
+         remark #15388: vectorization support: reference x[col] has aligned access   [ jacobi.c(79,32) ]
+         remark #15305: vectorization support: vector length 4
+         remark #15399: vectorization support: unroll factor set to 2
+         remark #15309: vectorization support: normalized vectorization overhead 1.200
+         remark #15417: vectorization support: number of FP up converts: single precision to double precision 1   [ jacobi.c(48,3) ]
+         remark #15300: LOOP WAS VECTORIZED
+         remark #15442: entire loop may be executed in remainder
+         remark #15448: unmasked aligned unit stride loads: 2 
+         remark #15475: --- begin vector cost summary ---
+         remark #15476: scalar cost: 10 
+         remark #15477: vector cost: 3.750 
+         remark #15478: estimated potential speedup: 2.520 
+         remark #15487: type converts: 1 
+         remark #15488: --- end vector cost summary ---
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7) inlined into jacobi.c(206,13)
+      <Alternate Alignment Vectorized Loop, Predicate Optimized v2>
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7) inlined into jacobi.c(206,13)
+      <Remainder loop for vectorization, Predicate Optimized v2>
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(104,5) inlined into jacobi.c(206,13)
+   <Peeled loop for vectorization>
+      remark #25015: Estimate of max trip count of loop=3
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(104,5) inlined into jacobi.c(206,13)
+      remark #15388: vectorization support: reference ptrtmp[row] has aligned access   [ jacobi.c(106,17) ]
+      remark #15389: vectorization support: reference x[row] has unaligned access   [ jacobi.c(106,29) ]
+      remark #15388: vectorization support: reference ptrtmp[row] has aligned access   [ jacobi.c(106,17) ]
+      remark #15388: vectorization support: reference x[row] has aligned access   [ jacobi.c(106,29) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15305: vectorization support: vector length 4
+      remark #15399: vectorization support: unroll factor set to 2
+      remark #15309: vectorization support: normalized vectorization overhead 0.780
+      remark #15417: vectorization support: number of FP up converts: single precision to double precision 2   [ jacobi.c(50,3) ]
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15442: entire loop may be executed in remainder
+      remark #15448: unmasked aligned unit stride loads: 2 
+      remark #15450: unmasked unaligned unit stride loads: 1 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 17 
+      remark #15477: vector cost: 6.250 
+      remark #15478: estimated potential speedup: 2.600 
+      remark #15487: type converts: 2 
+      remark #15488: --- end vector cost summary ---
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(104,5) inlined into jacobi.c(206,13)
+   <Alternate Alignment Vectorized Loop>
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(104,5) inlined into jacobi.c(206,13)
+   <Remainder loop for vectorization>
+      remark #15388: vectorization support: reference ptrtmp[row] has aligned access   [ jacobi.c(106,17) ]
+      remark #15389: vectorization support: reference x[row] has unaligned access   [ jacobi.c(106,29) ]
+      remark #15388: vectorization support: reference ptrtmp[row] has aligned access   [ jacobi.c(106,17) ]
+      remark #15389: vectorization support: reference x[row] has unaligned access   [ jacobi.c(106,29) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15335: remainder loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+      remark #15305: vectorization support: vector length 2
+      remark #15309: vectorization support: normalized vectorization overhead 1.864
+      remark #15417: vectorization support: number of FP up converts: single precision to double precision 2   [ jacobi.c(50,3) ]
+   LOOP END
+LOOP END
+
+LOOP BEGIN at jacobi.c(211,3)
+   remark #25236: Loop with pragma of trip count = 1000 ignored for large value
+   remark #25461: Imperfect Loop Unroll-Jammed by 2   (pre-vector) 
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at jacobi.c(214,5)
+   <Peeled loop for vectorization>
+      remark #25015: Estimate of max trip count of loop=3
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(214,5)
+      remark #15389: vectorization support: reference A[row*N+col] has unaligned access   [ jacobi.c(216,14) ]
+      remark #15388: vectorization support: reference x[col] has aligned access   [ jacobi.c(216,31) ]
+      remark #15388: vectorization support: reference A[row*N+col] has aligned access   [ jacobi.c(216,14) ]
+      remark #15388: vectorization support: reference x[col] has aligned access   [ jacobi.c(216,31) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15305: vectorization support: vector length 4
+      remark #15399: vectorization support: unroll factor set to 2
+      remark #15309: vectorization support: normalized vectorization overhead 2.324
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15442: entire loop may be executed in remainder
+      remark #15448: unmasked aligned unit stride loads: 2 
+      remark #15450: unmasked unaligned unit stride loads: 1 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 16 
+      remark #15477: vector cost: 4.250 
+      remark #15478: estimated potential speedup: 3.420 
+      remark #15488: --- end vector cost summary ---
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(214,5)
+   <Alternate Alignment Vectorized Loop>
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(214,5)
+   <Remainder loop for vectorization>
+   LOOP END
+LOOP END
+
+LOOP BEGIN at jacobi.c(211,3)
+<Remainder>
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at jacobi.c(214,5)
+   <Peeled loop for vectorization>
+      remark #25015: Estimate of max trip count of loop=3
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(214,5)
+      remark #15388: vectorization support: reference A[row*N+col] has aligned access   [ jacobi.c(216,14) ]
+      remark #15388: vectorization support: reference x[col] has aligned access   [ jacobi.c(216,31) ]
+      remark #15305: vectorization support: vector length 4
+      remark #15399: vectorization support: unroll factor set to 2
+      remark #15309: vectorization support: normalized vectorization overhead 2.812
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15442: entire loop may be executed in remainder
+      remark #15448: unmasked aligned unit stride loads: 2 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 8 
+      remark #15477: vector cost: 2.000 
+      remark #15478: estimated potential speedup: 3.580 
+      remark #15488: --- end vector cost summary ---
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(214,5)
+   <Alternate Alignment Vectorized Loop>
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(214,5)
+   <Remainder loop for vectorization>
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+jacobi.c(118,1):remark #34051: REGISTER ALLOCATION : [main] jacobi.c:118
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   30[ rax rdx rcx rbx rsi rdi r8-r15 zmm0-zmm15]
+        
+    Routine temporaries
+        Total         :     639
+            Global    :     157
+            Local     :     482
+        Regenerable   :     122
+        Spilled       :      36
+        
+    Routine stack
+        Variables     :     100 bytes*
+            Reads     :      14 [1.15e+01 ~ 0.1%]
+            Writes    :       2 [2.00e+00 ~ 0.0%]
+        Spills        :     248 bytes*
+            Reads     :      64 [3.03e+02 ~ 2.2%]
+            Writes    :      51 [4.08e+02 ~ 2.9%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: run(float *, float *, float *, float *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (run(float *, float *, float *, float *)) [2/6=33.3%] jacobi.c(44,1)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at jacobi.c(111,54)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at jacobi.c(72,5)
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+
+      LOOP BEGIN at jacobi.c(75,7)
+      <Peeled loop for vectorization, Predicate Optimized v1>
+         remark #25015: Estimate of max trip count of loop=3
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7)
+      <Predicate Optimized v1>
+         remark #25423: Condition at line 77 hoisted out of this loop
+         remark #15388: vectorization support: reference A[row*N+col] has aligned access   [ jacobi.c(79,15) ]
+         remark #15388: vectorization support: reference x[col] has aligned access   [ jacobi.c(79,32) ]
+         remark #15305: vectorization support: vector length 4
+         remark #15399: vectorization support: unroll factor set to 2
+         remark #15309: vectorization support: normalized vectorization overhead 1.200
+         remark #15417: vectorization support: number of FP up converts: single precision to double precision 1   [ jacobi.c(48,3) ]
+         remark #15300: LOOP WAS VECTORIZED
+         remark #15442: entire loop may be executed in remainder
+         remark #15448: unmasked aligned unit stride loads: 2 
+         remark #15475: --- begin vector cost summary ---
+         remark #15476: scalar cost: 10 
+         remark #15477: vector cost: 3.750 
+         remark #15478: estimated potential speedup: 2.520 
+         remark #15487: type converts: 1 
+         remark #15488: --- end vector cost summary ---
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7)
+      <Alternate Alignment Vectorized Loop, Predicate Optimized v1>
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7)
+      <Remainder loop for vectorization, Predicate Optimized v1>
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7)
+      <Peeled loop for vectorization, Predicate Optimized v2>
+         remark #25015: Estimate of max trip count of loop=3
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7)
+      <Predicate Optimized v2>
+         remark #15388: vectorization support: reference A[row*N+col] has aligned access   [ jacobi.c(79,15) ]
+         remark #15388: vectorization support: reference x[col] has aligned access   [ jacobi.c(79,32) ]
+         remark #15305: vectorization support: vector length 4
+         remark #15399: vectorization support: unroll factor set to 2
+         remark #15309: vectorization support: normalized vectorization overhead 1.200
+         remark #15417: vectorization support: number of FP up converts: single precision to double precision 1   [ jacobi.c(48,3) ]
+         remark #15300: LOOP WAS VECTORIZED
+         remark #15442: entire loop may be executed in remainder
+         remark #15448: unmasked aligned unit stride loads: 2 
+         remark #15475: --- begin vector cost summary ---
+         remark #15476: scalar cost: 10 
+         remark #15477: vector cost: 3.750 
+         remark #15478: estimated potential speedup: 2.520 
+         remark #15487: type converts: 1 
+         remark #15488: --- end vector cost summary ---
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7)
+      <Alternate Alignment Vectorized Loop, Predicate Optimized v2>
+      LOOP END
+
+      LOOP BEGIN at jacobi.c(75,7)
+      <Remainder loop for vectorization, Predicate Optimized v2>
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(104,5)
+   <Peeled loop for vectorization>
+      remark #25015: Estimate of max trip count of loop=3
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(104,5)
+      remark #15388: vectorization support: reference ptrtmp[row] has aligned access   [ jacobi.c(106,17) ]
+      remark #15388: vectorization support: reference x[row] has aligned access   [ jacobi.c(106,29) ]
+      remark #15305: vectorization support: vector length 4
+      remark #15309: vectorization support: normalized vectorization overhead 1.462
+      remark #15417: vectorization support: number of FP up converts: single precision to double precision 1   [ jacobi.c(49,3) ]
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15442: entire loop may be executed in remainder
+      remark #15448: unmasked aligned unit stride loads: 2 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 16 
+      remark #15477: vector cost: 6.500 
+      remark #15478: estimated potential speedup: 2.360 
+      remark #15487: type converts: 1 
+      remark #15488: --- end vector cost summary ---
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(104,5)
+   <Alternate Alignment Vectorized Loop>
+   LOOP END
+
+   LOOP BEGIN at jacobi.c(104,5)
+   <Remainder loop for vectorization>
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+jacobi.c(44,1):remark #34051: REGISTER ALLOCATION : [run] jacobi.c:44
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   24[ rax rdx rcx rbx rbp rsi rdi r8-r15 zmm0-zmm8]
+        
+    Routine temporaries
+        Total         :     205
+            Global    :      62
+            Local     :     143
+        Regenerable   :       7
+        Spilled       :      15
+        
+    Routine stack
+        Variables     :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :     120 bytes*
+            Reads     :      28 [9.42e+01 ~ 0.9%]
+            Writes    :      15 [3.52e+02 ~ 3.5%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: get_timestamp()
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (get_timestamp()) [3/6=50.0%] jacobi.c(242,1)
+  -> EXTERN: (244,3) gettimeofday(struct timeval *__restrict__, __timezone_ptr_t)
+
+
+    Report from: Code generation optimizations [cg]
+
+jacobi.c(242,1):remark #34051: REGISTER ALLOCATION : [get_timestamp] jacobi.c:242
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :    4[ rsi rdi zmm0-zmm1]
+        
+    Routine temporaries
+        Total         :      14
+            Global    :       6
+            Local     :       8
+        Regenerable   :       3
+        Spilled       :       0
+        
+    Routine stack
+        Variables     :      16 bytes*
+            Reads     :       2 [2.00e+00 ~ 9.1%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: parse_int(const char *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (parse_int(const char *)) [4/6=66.7%] jacobi.c(249,1)
+  -> EXTERN: (251,15) strtoul(const char *__restrict__, char **__restrict__, int)
+  -> EXTERN: (252,10) strlen(const char *)
+
+
+    Report from: Code generation optimizations [cg]
+
+jacobi.c(249,1):remark #34051: REGISTER ALLOCATION : [parse_int] jacobi.c:249
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :    5[ rax rdx rcx rsi rdi]
+        
+    Routine temporaries
+        Total         :      19
+            Global    :       8
+            Local     :      11
+        Regenerable   :       4
+        Spilled       :       0
+        
+    Routine stack
+        Variables     :       8 bytes*
+            Reads     :       1 [1.00e+00 ~ 5.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: parse_double(const char *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (parse_double(const char *)) [5/6=83.3%] jacobi.c(256,1)
+  -> EXTERN: (258,18) strtod(const char *__restrict__, char **__restrict__)
+  -> EXTERN: (259,10) strlen(const char *)
+
+
+    Report from: Code generation optimizations [cg]
+
+jacobi.c(256,1):remark #34051: REGISTER ALLOCATION : [parse_double] jacobi.c:256
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :    5[ rax rsi rdi zmm0-zmm1]
+        
+    Routine temporaries
+        Total         :      17
+            Global    :       8
+            Local     :       9
+        Regenerable   :       3
+        Spilled       :       0
+        
+    Routine stack
+        Variables     :       8 bytes*
+            Reads     :       1 [1.00e+00 ~ 5.6%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :       0 bytes*
+            Reads     :       0 [0.00e+00 ~ 0.0%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
+
+Begin optimization report for: parse_arguments(int, char **)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (parse_arguments(int, char **)) [6/6=100.0%] jacobi.c(263,1)
+  -> EXTERN: (272,10) strcmp(const char *, const char *)
+  -> EXTERN: (272,47) strcmp(const char *, const char *)
+  -> INLINE: (274,51) parse_double(const char *) (isz = 13) (sz = 20)
+    -> EXTERN: (258,18) strtod(const char *__restrict__, char **__restrict__)
+    -> EXTERN: (259,10) strlen(const char *)
+  -> EXTERN: (276,9) printf(const char *__restrict__, ...)
+  -> EXTERN: (277,9) exit(int)
+  -> EXTERN: (280,15) strcmp(const char *, const char *)
+  -> EXTERN: (280,51) strcmp(const char *, const char *)
+  -> INLINE: (282,44) parse_int(const char *) (isz = 15) (sz = 22)
+    -> EXTERN: (251,15) strtoul(const char *__restrict__, char **__restrict__, int)
+    -> EXTERN: (252,10) strlen(const char *)
+  -> EXTERN: (284,9) printf(const char *__restrict__, ...)
+  -> EXTERN: (285,9) exit(int)
+  -> EXTERN: (288,15) strcmp(const char *, const char *)
+  -> EXTERN: (288,47) strcmp(const char *, const char *)
+  -> INLINE: (290,31) parse_int(const char *) (isz = 15) (sz = 22)
+    -> EXTERN: (251,15) strtoul(const char *__restrict__, char **__restrict__, int)
+    -> EXTERN: (252,10) strlen(const char *)
+  -> EXTERN: (292,9) printf(const char *__restrict__, ...)
+  -> EXTERN: (293,9) exit(int)
+  -> EXTERN: (296,15) strcmp(const char *, const char *)
+  -> EXTERN: (296,45) strcmp(const char *, const char *)
+  -> INLINE: (298,34) parse_int(const char *) (isz = 15) (sz = 22)
+    -> EXTERN: (251,15) strtoul(const char *__restrict__, char **__restrict__, int)
+    -> EXTERN: (252,10) strlen(const char *)
+  -> EXTERN: (300,9) printf(const char *__restrict__, ...)
+  -> EXTERN: (301,9) exit(int)
+  -> EXTERN: (304,15) strcmp(const char *, const char *)
+  -> EXTERN: (304,45) strcmp(const char *, const char *)
+  -> EXTERN: (306,7) printf(const char *__restrict__, ...)
+  -> EXTERN: (307,7) printf(const char *__restrict__, ...)
+  -> EXTERN: (308,7) printf(const char *__restrict__, ...)
+  -> EXTERN: (309,7) printf(const char *__restrict__, ...)
+  -> EXTERN: (310,7) printf(const char *__restrict__, ...)
+  -> EXTERN: (311,7) printf(const char *__restrict__, ...)
+  -> EXTERN: (312,7) printf(const char *__restrict__, ...)
+  -> EXTERN: (313,7) printf(const char *__restrict__, ...)
+  -> EXTERN: (314,7) printf(const char *__restrict__, ...)
+  -> EXTERN: (315,7) exit(int)
+  -> EXTERN: (319,7) printf(const char *__restrict__, ...)
+  -> EXTERN: (320,7) exit(int)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at jacobi.c(270,3)
+   remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form from OpenMP specification
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+jacobi.c(263,1):remark #34051: REGISTER ALLOCATION : [parse_arguments] jacobi.c:263
+
+    Hardware registers
+        Reserved     :    2[ rsp rip]
+        Available    :   39[ rax rdx rcx rbx rbp rsi rdi r8-r15 mm0-mm7 zmm0-zmm15]
+        Callee-save  :    6[ rbx rbp r12-r15]
+        Assigned     :   12[ rax rdx rcx rsi rdi r8 r12-r15 zmm0-zmm1]
+        
+    Routine temporaries
+        Total         :     144
+            Global    :      33
+            Local     :     111
+        Regenerable   :      67
+        Spilled       :       4
+        
+    Routine stack
+        Variables     :      32 bytes*
+            Reads     :       4 [1.55e+00 ~ 1.5%]
+            Writes    :       0 [0.00e+00 ~ 0.0%]
+        Spills        :      32 bytes*
+            Reads     :       8 [1.05e+00 ~ 1.0%]
+            Writes    :       4 [3.83e+00 ~ 3.7%]
+    
+    Notes
+    
+        *Non-overlapping variables and spills may share stack space,
+         so the total stack size might be less than this.
+    
+
+===========================================================================
